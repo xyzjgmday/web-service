@@ -1,26 +1,115 @@
-# Lumen PHP Framework
+# Project: Lumen Service App
+Tugas 4 - Web Service
 
-[![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
-[![Total Downloads](https://img.shields.io/packagist/dt/laravel/lumen-framework)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Stable Version](https://img.shields.io/packagist/v/laravel/lumen-framework)](https://packagist.org/packages/laravel/lumen-framework)
-[![License](https://img.shields.io/packagist/l/laravel/lumen)](https://packagist.org/packages/laravel/lumen-framework)
+## Installation
+### Git Clone
+```sh
+git clone -b tugas-4 https://github.com/xyzjgmday/web-service.git
+```
 
-Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
+### install Dependency 
+```sh
+composer install
+```
+### Migrate 
+```sh
+php artisan migrate
+```
 
-> **Note:** In the years since releasing Lumen, PHP has made a variety of wonderful performance improvements. For this reason, along with the availability of [Laravel Octane](https://laravel.com/docs/octane), we no longer recommend that you begin new projects with Lumen. Instead, we recommend always beginning new projects with [Laravel](https://laravel.com).
+### Sending Seeder's
+```sh
+php artisan db:seed
+```
 
-## Official Documentation
+### how to running
+```sh
+#port 5000
+php -S localhost:5000 -t public
+```
+or
+```sh
+#port 500
+php artisan serve
+```
 
-Documentation for the framework can be found on the [Lumen website](https://lumen.laravel.com/docs).
+## End-point: Getting Status
+### Method: GET
+>```
+>localhost:500
+>```
 
-## Contributing
+## End-point: Login
+### Method: POST
+>```
+>localhost:500/login
+>```
+### Body (**raw**)
 
-Thank you for considering contributing to Lumen! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```json
+{
+    "email" : "daysubhiz@gmail.com",
+    "password" : "password"
+}
+```
 
-## Security Vulnerabilities
 
-If you discover a security vulnerability within Lumen, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
 
-## License
+## End-point: Get All Users
+### Method: GET
+>```
+>localhost:500/users
+>```
+### 🔑 Authentication bearer
 
-The Lumen framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+|Param|value|Type|
+|---|---|---|
+|token|--login-token|string|
+
+
+⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
+
+## End-point: Get Detail User
+### Method: GET
+>```
+>localhost:500/users/1
+>```
+### 🔑 Authentication bearer
+
+|Param|value|Type|
+|---|---|---|
+|token|--login-token|string|
+
+
+
+⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
+
+## End-point: Get Category
+### Method: GET
+>```
+>localhost:5000/category
+>```
+### 🔑 Authentication bearer
+
+|Param|value|Type|
+|---|---|---|
+|token|--login-token|string|
+
+
+
+⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
+
+## End-point: Get All Roles
+### Method: GET
+>```
+>localhost:500/role
+>```
+### 🔑 Authentication bearer
+
+|Param|value|Type|
+|---|---|---|
+|token|--login-token|string|
+
+
+
+⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
