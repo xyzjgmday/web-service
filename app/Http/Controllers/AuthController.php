@@ -12,7 +12,7 @@ class AuthController extends Controller
     public function __construct()
     {
         $this->users = [
-            'riyan' => 'password',
+            'dayat' => 'password',
         ];
     }
 
