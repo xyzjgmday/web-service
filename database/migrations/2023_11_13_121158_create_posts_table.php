@@ -4,10 +4,12 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreatePostsTable extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
     public function up()
     {
@@ -16,18 +18,22 @@ return new class extends Migration
 
             $table->string('title', 100);
             $table->enum('status', array('draft', 'published'))->default('draft');
-            $table->text('content', 65535);
-            $table->integer('user_id')->index('user_id_foreign');
-
+            $table->text('content');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('categories_id');
+            $table->foreign('categories_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
 
     /**
      * Reverse the migrations.
+     * 
+     * @return void
      */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('posts');
     }
-};
+}

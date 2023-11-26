@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
 
-use App\Models\Post;
 
 class PostsController extends Controller
 {
+    /**
+     * Menampilkan resource
+     * 
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         $posts = Post::OrderBy("id", "DESC")->paginate(10);
@@ -61,7 +66,7 @@ class PostsController extends Controller
 
         $post->delete();
         $message = [
-            "message"=> "Deleted SUccessfully", 'post_id' => $id
+            "message"=> "Deleted Successfully", 'post_id' => $id
         ];
 
         return response()->json($message, 200);
