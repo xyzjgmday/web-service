@@ -44,77 +44,152 @@ class PostsController extends Controller
     }
 
     public function store(Request $request)
-{
-    $acceptHeader = $request->header('Accept');
+    {
+        $acceptHeader = $request->header('Accept');
 
-    if ($acceptHeader === 'application/json' || $acceptHeader === 'application/xml') {
+        if ($acceptHeader === 'application/json' || $acceptHeader === 'application/xml') {
 
-        $contentTypeHeader = $request->header('Content-Type');
+            $contentTypeHeader = $request->header('Content-Type');
 
-        if ($contentTypeHeader === 'application/json') {
-            // Manual validation
-            $validator = app('validator')->make($request->all(), [
-                'title' => 'required',
-                // tambahkan validasi untuk kolom-kolom lainnya
-            ]);
+            if ($contentTypeHeader === 'application/json') {
+                // Manual validation
+                $validator = app('validator')->make($request->all(), [
+                    'title' => 'required',
+                    // tambahkan validasi untuk kolom-kolom lainnya
+                ]);
 
-            if ($validator->fails()) {
-                // Jika validasi gagal, kirim respon error
-                return response()->json(['error' => $validator->errors()], 422);
+                if ($validator->fails()) {
+                    // Jika validasi gagal, kirim respon error JSON
+                    return response()->json(['error' => $validator->errors()], 422);
+                }
+                $input = $request->all();
+                $post = Post::create($input);
+
+                return response()->json($post, 200);
+            } elseif ($contentTypeHeader === 'application/xml') {
+                $validator = app('validator')->make($request->all(), [
+                    'title' => 'required',
+                    
+                ]);
+
+                if ($validator->fails()) {
+                    // Jika validasi gagal, kirim respon error XML
+                    // Format XML untuk kesalahan validasi
+                    $errorXML = '<error>' . $validator->errors()->first() . '</error>';
+                    return response($errorXML, 422)
+                        ->header('Content-Type', 'application/xml');
+                }
+
+                // Jika validasi berhasil, lanjutkan dengan membuat post
+                $input = $request->all();
+                $post = Post::create($input);
+
+                // Misalnya, format XML untuk respons berhasil
+                $successXML = '<success><message>Post created successfully</message></success>';
+                return response($successXML, 200)
+                    ->header('Content-Type', 'application/xml');
+            } else {
+                return response('Unsupported Media Type', 415);
+            }
+        } else {
+            return response('Not Acceptable!', 406);
+        }
+    }
+
+
+    public function show(Request $request, $id)
+    {
+        $acceptHeader = $request->header('Accept');
+
+        if ($acceptHeader === 'application/json' || $acceptHeader === 'application/xml') {
+            $post = Post::findOrFail($id);
+
+            if (!$post) {
+                abort(404);
             }
 
-            // Jika validasi berhasil, lanjutkan dengan membuat post
-            $input = $request->all();
-            $post = Post::create($input);
-
-            return response()->json($post, 200);
+            if ($acceptHeader === 'application/json') {
+                return response()->json($post, 200);
+            } elseif ($acceptHeader === 'application/xml') {
+                // Format XML untuk respons tunggal
+                $postXML = '<post><id>' . $post->id . '</id><title>' . $post->title . '</title></post>';
+                return response($postXML, 200)->header('Content-Type', 'application/xml');
+            }
         } else {
-            return response('Unsupported Media Type', 415);
+            return response('Not Acceptable!', 406);
         }
-    } else {
-        return response('Not Acceptable!', 406);
     }
-}
 
-
-    public function show($id)
-    {
-        $post = Post::findOrFail($id);
-
-        if (!$post) {
-            abort(404);
-        }
-        return response()->json($post, 200);
-    }
 
     public function update(Request $request, $id)
     {
-        $input = $request->all();
+        $acceptHeader = $request->header('Accept');
+        $contentTypeHeader = $request->header('Content-Type');
 
-        $post = Post::find($id);
+        if (($acceptHeader === 'application/json' || $acceptHeader === 'application/xml') &&
+            ($contentTypeHeader === 'application/json' || $contentTypeHeader === 'application/xml')) {
 
-        if (!$post) {
-            abort(404);
+            $input = $request->all();
+
+            $post = Post::find($id);
+
+            if (!$post) {
+                abort(404);
+            }
+
+            if ($contentTypeHeader === 'application/json') {
+                $post->fill($input);
+                $post->save();
+
+                if ($acceptHeader === 'application/json') {
+                    return response()->json($post, 200);
+                } elseif ($acceptHeader === 'application/xml') {
+                    // Format XML untuk respons tunggal
+                    $postXML = '<post><id>' . $post->id . '</id><title>' . $post->title . '</title></post>';
+                    return response($postXML, 200)->header('Content-Type', 'application/xml');
+                }
+            } elseif ($contentTypeHeader === 'application/xml') {
+                if ($acceptHeader === 'application/json') {
+                    return response()->json($post, 200);
+                } elseif ($acceptHeader === 'application/xml') {
+                    // Format XML untuk respons tunggal
+                    $postXML = '<post><id>' . $post->id . '</id><title>' . $post->title . '</title></post>';
+                    return response($postXML, 200)->header('Content-Type', 'application/xml');
+                }
+            }
+        } else {
+            return response('Not Acceptable or Unsupported Media Type!', 406);
         }
-
-        $post->fill($input);
-        $post->save();
-
-        return response()->json($post, 200);
     }
 
-    public function destroy($id)
+    
+
+    public function destroy(Request $request, $id)
     {
-        $post = Post::findOrFail($id);
-        if(!$post){
-            abort(404);
+        $acceptHeader = $request->header('Accept');
+
+        if ($acceptHeader === 'application/json' || $acceptHeader === 'application/xml') {
+            $post = Post::findOrFail($id);
+
+            if (!$post) {
+                abort(404);
+            }
+
+            if ($acceptHeader === 'application/json') {
+                $post->delete();
+                $message = [
+                    "message" => "Deleted Successfully", 'post_id' => $id
+                ];
+
+                return response()->json($message, 200);
+            } elseif ($acceptHeader === 'application/xml') {
+                // Format XML untuk respons penghapusan
+                $messageXML = '<message><text>Deleted Successfully</text><post_id>' . $id . '</post_id></message>';
+                return response($messageXML, 200)->header('Content-Type', 'application/xml');
+            }
+        } else {
+            return response('Not Acceptable!', 406);
         }
-
-        $post->delete();
-        $message = [
-            "message"=> "Deleted Successfully", 'post_id' => $id
-        ];
-
-        return response()->json($message, 200);
     }
+
 }
