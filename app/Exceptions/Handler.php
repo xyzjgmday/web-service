@@ -71,9 +71,9 @@ class Handler extends ExceptionHandler
         } elseif ($exception instanceof AuthorizationException) {
             $status = Response::HTTP_FORBIDDEN;
             $exception = new AuthorizationException('HTTP_FORBIDDEN', $status);
-        } elseif ($exception instanceof \Dotenv\Exception\ValidationException && $exception->getResponse()) {
+        } elseif ($exception instanceof \Illuminate\Validation\ValidationException && $exception->getResponse()) {
             $status = Response::HTTP_BAD_REQUEST;
-            $exception = new \Dotenv\Exception\ValidationException('HTTP_BAD_REQUEST', $status, $exception);
+            $exception = new \Illuminate\Validation\ValidationException('HTTP_BAD_REQUEST', $status, $exception);
         } elseif ($exception) {
             $exception = new HttpException($status, 'HTTP_INTERNAL_SERVER_ERROR');
         }

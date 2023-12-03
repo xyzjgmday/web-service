@@ -92,7 +92,7 @@ class PostsController extends Controller
             // 'user_id' => 'required|exists:users,id'
         ];
 
-        $validator = \Validator::make($input, $validationRules);
+        $validator = Validator::make($input, $validationRules);
 
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
