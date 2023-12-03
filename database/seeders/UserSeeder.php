@@ -16,9 +16,9 @@ class UserSeeder extends Seeder
 
     public function run()
     {
-        $user =  [
-            'name' => 'riyan',
-            'email' => 'riyanmaulana402@yahoo.co.id',
+       $user =  [
+            'name' => 'nurhidayat',
+            'email' => 'daysubhiz@gmail.com',
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
             // password
         ];
