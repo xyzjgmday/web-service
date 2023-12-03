@@ -24,7 +24,7 @@ php artisan db:seed
 ### how to running
 ```sh
 #port 5000
-php -S localhost:5000 -t public
+php -S localhost:500 -t public
 ```
 or
 ```sh
