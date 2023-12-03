@@ -1,10 +1,10 @@
 # Project: Lumen Service App
-Tugas 4 - Web Service
+Tugas 7 - Web Service
 
 ## Installation
 ### Git Clone
 ```sh
-git clone -b tugas-4 https://github.com/xyzjgmday/web-service.git
+git clone -b tugas-7 https://github.com/xyzjgmday/web-service.git
 ```
 
 ### install Dependency 
