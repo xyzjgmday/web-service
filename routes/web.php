@@ -32,7 +32,7 @@ $router->get('/scores', [
     }
 ]);
 
-$router->post('/login', 'AuthController@login');
+// $router->post('/login', 'AuthController@login');
 $router->group(['middleware' => 'auth'], function () use ($router) {
     $router->get('/users', 'UsersController@index');
     $router->get('/users/{id}', 'UsersController@show');
@@ -45,3 +45,7 @@ $router->group(['middleware' => 'auth'], function () use ($router) {
     $router->get('/post/{id}', 'PostsController@show');
     $router->put('/post/{id}', 'PostsController@update');
     $router->delete('/post/{id}', 'PostsController@destroy');
+
+$router->group(['prefix' => 'auth'], function () use ($router) {
+    $router->post('/register', 'AuthController@register');
+});
