@@ -3,43 +3,45 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-
-    private $users;
-
-    public function __construct()
+    public function register(Request $request)
     {
-        $this->users = [
-            'Nurhidayat' => 'password',
+        $this->validate ($request, [
+            'name' => 'required|string',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|confirmed',
+        ]);
+
+        $input = $request->all();
+
+        // validation
+        $validationRules = [
+            'name' => 'required|string',
+            'email' => 'required|email\unique:users',
+            'password' => 'required|confimed',
         ];
-    }
 
-    public function login(Request $request)
-    {
-        $credentials = $request->only(['username', 'password']);
+        $validator = Validator::make($input, $validationRules);
 
-        if (!isset($credentials['username'])) {
-            return response()->json(['message' => 'Invalid username'], 404);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
         }
+        // validation end
 
-        if ($this->isValidCredentials($credentials)) {
-            $token = "YIo6abISPQq56tJhH6LtD7kIE2ZXacjRvjbLGzbXZHE"; //dibuat sendiri aja
-            return response()->json(['message' => 'Login Berhasil', 'token' => 'YIo6abISPQq56tJhH6LtD7kIE2ZXacjRvjbLGzbXZHE']);
-        } else {
-            return response()->json(['message' => 'Invalid credentials'], 401);
-        }
-    }
+        // create user
+        $user = new User;
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $plainPassword = $request->input('password');
+        $user->password = app('hash')->make($plainPassword);
+        $user->save();
 
-    private function isValidCredentials($credentials)
-    {
-        foreach ($this->users as $username => $password) {
-            if ($credentials['username'] === $username && $credentials['password'] === $password) {
-                return true;
-            }
-        }
+        return response()->json($user, 200);
 
-        return false;
     }
 }
