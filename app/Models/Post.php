@@ -16,6 +16,11 @@ class Post extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class,'user_id');
+        return $this->belongsTo('App\Models\User');
+    }
+
+    public function comments()
+    {
+        return $this->belongsToMany('App\Models\Comment');
     }
 }

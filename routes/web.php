@@ -54,3 +54,6 @@ $router->group(['prefix' => 'public', 'namespace' => 'Publish',], function () us
     $router->get('posts', 'PostsController@index');
     $router->get('post/{id}', 'PostsController@show');
 });
+
+    $router->post('comments', 'CommentsController@store');
+    $router->get('/posts/{id}/comments', 'CommentsController@show');

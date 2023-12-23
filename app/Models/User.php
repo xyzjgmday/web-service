@@ -44,4 +44,14 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     {
         return[];
     }
+
+    public function posts()
+    {
+        return $this->belongsToMany('App\Model\Post');
+    }
+
+    public function comments()
+    {
+        return $this->belongsToMany('App\Models\Comment');
+    }
 }
