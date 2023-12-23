@@ -7,12 +7,30 @@ use App\Models\Post;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class PostsController extends Controller
 {
     public function index()
     {
-        $posts = Post::Where(['user_id' => Auth::user()->id])->OrderBy("id", "DESC")->paginate(2)->toArray();
+        // authorization
+        // check if current user is authorized to do this action
+
+        if (Gate::denies('read-post')) {
+            return response()->json([
+                'succes' => false,
+                'status' => 403,
+                'message' => 'You are unauthorized',
+            ]);
+        }
+
+        if (Auth::user()->role ==='admin') {
+            // jika admin, akan query semua post record
+            $posts = Post::OrderBy("id", "DESC")->paginate(2)->toArray();
+        } else {
+            $posts = Post::Where(['user_id' => Auth::user()->id])->OrderBy("id", "DESC")->paginate(2)->toArray();
+        }
+        // Authorization End
 
         $response = [
             "total_count" => $posts["total"],
@@ -34,7 +52,7 @@ class PostsController extends Controller
             'title' => 'required|min:5',
             'content' => 'required|min:10',
             'status' => 'required|in:draft, published',
-            'user_id' => 'required|exists:users,id'
+            // 'user_id' => 'required|exists:users,id'
         ];
 
         $validator = Validator::make($input, $validationRules);
@@ -65,6 +83,15 @@ class PostsController extends Controller
 
         if (!$post) {
             abort(404);
+        }
+
+        // authorization
+        if (Gate::denies('update-post', $post)) {
+            return response()->json([
+                'succes' => false,
+                'status' => 403,
+                'message' => 'You are unauthorized'
+            ], 403);
         }
 
         $validationRules = [

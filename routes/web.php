@@ -49,3 +49,8 @@ $router->group(['prefix' => 'auth'], function () use ($router) {
     $router->post('/register', 'AuthController@register');
     $router->post('/login', 'AuthController@login');
 });
+
+$router->group(['prefix' => 'public', 'namespace' => 'Publish',], function () use ($router) {
+    $router->get('posts', 'PostsController@index');
+    $router->get('post/{id}', 'PostsController@show');
+});
