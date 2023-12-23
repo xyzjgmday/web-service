@@ -61,6 +61,16 @@ class PostsController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
+        if (Gate::allows('create-post')) {
+            // Jika pengguna diizinkan membuat post, lanjutkan
+            $input['user_id'] = auth()->id();
+            $post = Post::create($input);
+            return response()->json($post, 200);
+        } else {
+            // Jika pengguna tidak diizinkan membuat post
+            return response()->json(['message' => 'Permission denied'], 403);
+        }
+
         $post = Post::Where(['user_id' => Auth::user()->id])->create($input);
         return response()->json($post, 200);
     }
@@ -73,6 +83,15 @@ class PostsController extends Controller
             abort(404);
         }
         return response()->json($post, 200);
+
+        // Mengecek otorisasi menggunakan gate
+        if (Gate::allows('read-post-detail', $post)) {
+            // Jika pengguna diizinkan membaca detail post, lanjutkan
+            return response()->json($post, 200);
+        } else {
+            // Jika pengguna tidak diizinkan membaca detail post
+            return response()->json(['message' => 'Permission denied'], 403);
+        }
     }
 
     public function update(Request $request, $id)
@@ -127,5 +146,19 @@ class PostsController extends Controller
         ];
 
         return response()->json($message, 200);
+
+        if (Gate::allows('delete-post', $post)) {
+            // Jika pengguna diizinkan menghapus post, lanjutkan
+            $post->delete();
+            $message = [
+                "message" => "Deleted Successfully",
+                'post_id' => $id,
+            ];
+            return response()->json($message, 200);
+        } else {
+            // Jika pengguna tidak diizinkan menghapus post
+            return response()->json(['message' => 'Permission denied'], 403);
+        }
+    
     }
 }

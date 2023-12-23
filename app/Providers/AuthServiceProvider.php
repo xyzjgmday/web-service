@@ -36,6 +36,13 @@ class AuthServiceProvider extends ServiceProvider
             return $user->role == 'editor' || $user->role == 'admin';
         });
 
+        // implementasi untuk function show
+        Gate::define('read-post-detail', function ($user, $post) {
+            // Admin dapat membaca semua post, editor hanya dapat membaca post yang mereka tulis
+            return $user->role === 'admin' || ($user->role === 'editor' && $post->user_id === $user->id);
+        });
+        
+
         Gate::define('update-post', function ($user, $post) {
             // check admin atau editor
             if($user->role === 'admin') {
@@ -46,6 +53,19 @@ class AuthServiceProvider extends ServiceProvider
                 return false;
             }
         });
+
+        // implementasi admin dan editor untuk create post (function store)
+        Gate::define('create-post', function ($user) {
+            return $user->role === 'admin' || $user->role === 'editor';
+        });
+
+        // Implementasi function destroy
+        Gate::define('delete-post', function ($user, $post) {
+            // Admin dapat menghapus semua post, editor hanya dapat menghapus post yang mereka tulis
+            return $user->role === 'admin' || ($user->role === 'editor' && $post->user_id === $user->id);
+        });
+        
+        
 
         $this->app['auth']->viaRequest('api', function ($request) {
             if ($request->input('api_token')) {
