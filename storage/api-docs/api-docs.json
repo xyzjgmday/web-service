@@ -1,0 +1,22 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Your API",
+        "description": "Your API description",
+        "version": "1.0"
+    },
+    "paths": {
+        "/employee": {
+            "get": {
+                "summary": "Summary of the endpoint",
+                "description": "Description of the endpoint",
+                "operationId": "8a716ec390840703f008b099260ac999",
+                "responses": {
+                    "200": {
+                        "description": "Successful response"
+                    }
+                }
+            }
+        }
+    }
+}
