@@ -1,115 +1,51 @@
-# Project: Lumen Service App
-Tugas 7 - Web Service
+# Project: Lumen Client App
 
-## Installation
-### Git Clone
+# 📁 Tugas 12
+
+## Project setup
+
+### Clone Tugas 12
+
 ```sh
-git clone -b tugas-7 https://github.com/xyzjgmday/web-service.git
+git clone -b tugas-11 https://github.com/xyzjgmday/web-service.git
 ```
 
-### install Dependency 
-```sh
+```
 composer install
 ```
-### Migrate 
-```sh
+
+### Database: Migrations
+
+```
 php artisan migrate
 ```
 
-### Sending Seeder's
-```sh
+### Database: Seeding
+
+```
 php artisan db:seed
 ```
 
-### how to running
-```sh
-#port 5000
+### Local Development Server
+
+```
 php -S localhost:5000 -t public
 ```
-or
-```sh
-#port 500
-php artisan serve
-```
 
-## End-point: Getting Status
-### Method: GET
->```
->localhost:500
->```
+## End-point: Get Posts
 
-## End-point: Login
 ### Method: POST
->```
->localhost:500/login
->```
-### Body (**raw**)
 
-```json
-{
-    "email" : "daysubhiz@gmail.com",
-    "password" : "password"
-}
-```
-
+> ```
+> localhost:5000/public/posts
+> ```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
 
-## End-point: Get All Users
+## End-point: Add Posts
+
 ### Method: GET
->```
->localhost:500/users
->```
-### 🔑 Authentication bearer
 
-|Param|value|Type|
-|---|---|---|
-|token|--login-token|string|
-
-
-⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
-
-## End-point: Get Detail User
-### Method: GET
->```
->localhost:500/users/1
->```
-### 🔑 Authentication bearer
-
-|Param|value|Type|
-|---|---|---|
-|token|--login-token|string|
-
-
-
-⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
-
-## End-point: Get Category
-### Method: GET
->```
->localhost:5000/category
->```
-### 🔑 Authentication bearer
-
-|Param|value|Type|
-|---|---|---|
-|token|--login-token|string|
-
-
-
-⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
-
-## End-point: Get All Roles
-### Method: GET
->```
->localhost:500/role
->```
-### 🔑 Authentication bearer
-
-|Param|value|Type|
-|---|---|---|
-|token|--login-token|string|
-
-
-
-⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
+> ```
+> localhost:5000/posts
+> ```
