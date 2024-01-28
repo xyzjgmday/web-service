@@ -38,13 +38,17 @@ $router->group(['middleware' => 'auth'], function () use ($router) {
     $router->get('/users/{id}', 'UsersController@show');
     $router->get('category', 'CategoryController@index');
     $router->get('role', 'RoleController@index');
+
+    $router->post('profiles', 'ProfilesController@store');
+    $router->get('profile/{userId}', 'ProfilesController@show');
+    $router->get('profile/image/{imageName}', 'ProfilesController@image');
 });
-    //master Posts
-    $router->get('/posts', 'PostsController@index');
-    $router->post('/posts', 'PostsController@store');
-    $router->get('/post/{id}', 'PostsController@show');
-    $router->put('/post/{id}', 'PostsController@update');
-    $router->delete('/post/{id}', 'PostsController@destroy');
+//master Posts
+$router->get('/posts', 'PostsController@index');
+$router->post('/posts', 'PostsController@store');
+$router->get('/post/{id}', 'PostsController@show');
+$router->put('/post/{id}', 'PostsController@update');
+$router->delete('/post/{id}', 'PostsController@destroy');
 
 $router->group(['prefix' => 'auth'], function () use ($router) {
     $router->post('/register', 'AuthController@register');
