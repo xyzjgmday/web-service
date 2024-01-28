@@ -11,7 +11,7 @@ class AuthController extends Controller
 {
     public function register(Request $request)
     {
-        $this->validate ($request, [
+        $this->validate($request, [
             'name' => 'required|string',
             'email' => 'required|email|unique:users',
             'password' => 'required|confirmed',
@@ -22,7 +22,7 @@ class AuthController extends Controller
         // validation
         $validationRules = [
             'name' => 'required|string',
-            'email' => 'required|email\unique:users',
+            'email' => 'required|email|unique:users',
             'password' => 'required|confimed',
         ];
 
@@ -42,6 +42,5 @@ class AuthController extends Controller
         $user->save();
 
         return response()->json($user, 200);
-
     }
 }
