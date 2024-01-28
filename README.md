@@ -1,13 +1,13 @@
 # Project: Lumen Client App
 
-# 📁 Tugas 12
+# 📁 Tugas 15
 
 ## Project setup
 
-### Clone Tugas 13
+### Clone Tugas 15
 
 ```sh
-git clone -b tugas-13 https://github.com/xyzjgmday/web-service.git
+git clone -b tugas-15 https://github.com/xyzjgmday/web-service.git
 ```
 
 ```
@@ -34,18 +34,9 @@ php -S localhost:5000 -t public
 
 ## End-point: Get Posts
 
-### Method: POST
+# 📁 Web Service - Api Docs Swagger
 
-> ```
-> localhost:5000/public/posts
-> ```
+```
+http://localhost:5000/api/documentation
 
-⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
-
-## End-point: Add Posts
-
-### Method: GET
-
-> ```
-> localhost:5000/posts
-> ```
+```
